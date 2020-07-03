@@ -1,5 +1,27 @@
-$red: green;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&display=swap');
+@import "~normalize.css";
+
+@import "header";
+@import "toolbar";
+@import "formula";
+@import "table";
+@import "dashboard";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  background: $red;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+}
+
+.excel {
+  position: relative; // внутренние блоки отталкиваются от родительского
+  color: #888;
+  height: 100%;
+  max-width: 100%; // появляется скролл, если весь контент не вмещшается в ширину экрана
+  font-size: .8rem;
 }
