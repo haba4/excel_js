@@ -6,22 +6,27 @@ const LETTER_MAPPING = {
 /**
  * Функция формирует клетки таблицы
  * @param {string} cell
+ * @param {number} colIndex
  * @return {string}
  */
-function toCell(cell) {
+function toCell(cell, colIndex) {
   return `
-    <div class="cell" contenteditable>${cell}</div>
+    <div class="cell" contenteditable data-col="${colIndex}">${cell}</div>
   `;
 }
 
 /**
  * Функция создает колонки таблицы
  * @param {string} col - название колонки
+ * @param {number} index - индекс колонки
  * @return {string}
  */
-function toColumn(col) {
+function toColumn(col, index) {
   return `
-    <div class="column">${col}</div>
+    <div class="column" data-type="resizable" data-col="${index}">
+      ${col}
+      <div class="col-resize" data-resize="col"></div>
+    </div>
   `;
 }
 
@@ -32,9 +37,13 @@ function toColumn(col) {
  * @return {string} - возвращает готовую строку
  */
 function createRow(index, content) {
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row">
-        <div class="info">${index ? index: ''}</div>
+    <div class="row" data-type="resizable">
+        <div class="row-info">
+          ${index ? index : ''}
+          ${resize}
+        </div>
         <div class="data">${content}</div>
     </div>
   `;

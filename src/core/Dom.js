@@ -60,6 +60,50 @@ class Dom {
     }
     return this;
   }
+  
+  /**
+   * геттер, возвращает дата-атрибут элемента
+   * @return {DOMStringMap}
+   */
+  get data() {
+    return this.$el.dataset;
+  }
+  
+  /**
+   * Метод возвращает ближайщего родителя у которого дата-атрибут = selector
+   * @param {string} selector - дата-атрибут
+   * @return {Dom} - инстанс класса Dom
+   */
+  closest(selector) {
+    return $(this.$el.closest(selector));
+  }
+  
+  /**
+   * Получаем координаты дом ноды: высота, ширина, координата х, у...
+   * @return {ClientRect | DOMRect}
+   */
+  getCoordinates() {
+    return this.$el.getBoundingClientRect();
+  }
+  
+  /**
+   * Обертка над querySelectorAll
+   * @param {string} selector
+   * @return {HTMLElementTagNameMap}
+   */
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector);
+  }
+  
+  /**
+   * Метод задает стили node элементу
+   * @param {object} styles - объект стилей в виде ключ-значение. Например {height: '20px', width: '30px'}
+   */
+  css(styles = {}) {
+    Object.entries(styles).forEach(([key, value]) => {
+      this.$el.style[key] = value;
+    });
+  }
 }
 
 export function $(selector) {
