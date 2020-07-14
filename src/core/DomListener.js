@@ -19,7 +19,6 @@ export class DomListener {
     this.listeners.forEach((listener) => {
       const method = _getMethodName(listener);
       if (!this[method]) {
-        console.log(this);
         throw new Error(`Метод "${method}" не реализован в компоненте "${this.name || ''}"`);
       }
       // переопределяем метод с привязкой контекста, т.к. контекст отваливается, если
