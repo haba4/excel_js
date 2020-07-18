@@ -1,4 +1,4 @@
-import {capitalize} from '@core/utils';
+import {_getMethodName} from '@core/utils';
 
 /**
 * Класс для добавления и удаления слушателей
@@ -37,13 +37,4 @@ export class DomListener {
       this.$root.off(listener, this[method]);
     });
   }
-}
-
-/**
- * Приватная функция, которая преобразует к примеру: 'input' в 'onInput'
- * @param {string} eventName - на вход получает название эвента, например: 'click'
- * @return {string} - возвращает преобразованный эвент: 'onClick'
- */
-function _getMethodName(eventName) {
-  return 'on' + capitalize(eventName);
 }

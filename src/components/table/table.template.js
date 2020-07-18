@@ -3,16 +3,25 @@ const LETTER_MAPPING = {
   'Z': 91
 };
 
+export const COLLS = LETTER_MAPPING['Z'] - LETTER_MAPPING['A'];
+
 /**
  * Функция формирует клетки таблицы
- * @param {string} cell
- * @param {number} colIndex
- * @return {string}
+ * @param {number} row
+ * @return {function}
  */
-function toCell(cell, colIndex) {
-  return `
-    <div class="cell" contenteditable data-col="${colIndex}">${cell}</div>
-  `;
+function toCell(row) {
+  return function(_, col) {
+    return `
+      <div
+        class="cell"
+        contenteditable
+        data-col="${col}"
+        data-type="cell"
+        data-id="${row}:${col}"
+       ></div>
+    `;
+  };
 }
 
 /**
@@ -61,16 +70,16 @@ function toChar(_, index) {
 
 /**
  * Метод возвращает строку таблицы
- * @param {number} index - номер строки
+ * @param {number} row - номер строки
  * @return {string}
  */
-function getCells(index) {
+function getCells(row) {
   const colsCount = LETTER_MAPPING.Z - LETTER_MAPPING.A;
   const cells = new Array(colsCount)
       .fill('')
-      .map(toCell)
+      .map(toCell(row))
       .join('');
-  return createRow(index, cells);
+  return createRow(row + 1, cells);
 }
 
 /**
@@ -97,8 +106,8 @@ export function createTable(rowsCount = 25) {
   const rows = [];
   
   rows.push(getTableHeader()); // первая строка - зоголовок таблицы: A, B, C, ...
-  for (let i = 0; i < rowsCount; i++) {
-    rows.push(getCells(i + 1));
+  for (let row = 0; row < rowsCount; row++) {
+    rows.push(getCells(row));
   }
   
   return rows.join('');

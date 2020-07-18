@@ -11,6 +11,8 @@
     "no-trailing-spaces": "off",
     "require-jsdoc": "off",
     "eol-last": "off",
+    "operator-linebreak": "off",
+    "indent": "off"
   },
   "extends": [
     "eslint:recommended",
