@@ -1,4 +1,5 @@
 import {$} from '@core/Dom';
+import {Emitter} from '@core/Emitter';
 
 /**
  * Класс Excel - страница excel
@@ -12,6 +13,7 @@ export class Excel {
   constructor(selector, options) {
     this.$exelElement = $(selector);
     this.components = options.components || [];
+    this.emitter = new Emitter();
   }
   
   /**
@@ -20,9 +22,12 @@ export class Excel {
    */
   getRoot() {
     const $root = $.create('div', 'excel');
+    const componentOptions = {
+      emitter: this.emitter,
+    };
     this.components = this.components.map((Component) => {
       const $elem = $.create('div', Component.className);
-      const component = new Component($elem);
+      const component = new Component($elem, componentOptions);
       // DEBUG
       if (component.name) {
         window['c' + component.name] = component;
@@ -40,5 +45,15 @@ export class Excel {
   render() {
     this.$exelElement.append(this.getRoot());
     this.components.forEach((component) => component.init());
+  }
+  
+  /**
+   * Метод вызывается при переходе на другую страницу (не Excel).
+   * Удаляет всех слушателей (event listeners) и подписчиков (subscribers)
+   */
+  destroy() {
+    this.components.forEach((component) => {
+      component.destroy();
+    });
   }
 }
